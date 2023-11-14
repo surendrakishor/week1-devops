@@ -27,4 +27,12 @@ jobs:
       - name: Run tests
         run: |
           python -m pytest -v tests
-       
+          - name: Run tests with coverage
+          run: |
+            python -m pytest -v --cov --junitxml=pytest.xml tests | tee pytest-coverage.txt
+  
+      - name: Pytest coverage comment
+        uses: MishaKav/pytest-coverage-comment@main
+        with:
+            pytest-coverage-path: ./pytest-coverage.txt
+            junitxml-path: ./pytest.xml
